@@ -1,0 +1,8 @@
+streamlit
+pandas
+google-generativeai
+pymupdf
+Pillow
+openpyxl
+gspread
+oauth2client
