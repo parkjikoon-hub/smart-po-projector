@@ -1,5 +1,14 @@
 
 import streamlit as st
+
+# --- Page Config (Must be first) ---
+st.set_page_config(
+    page_title="스마트 발주서 관리자",
+    page_icon="📑",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 import pandas as pd
 from pdf_parser import PRExtractor
 from excel_handler import create_excel_with_tabs, flatten_json_to_rows
@@ -12,17 +21,12 @@ import google.generativeai as genai
 # [팀 공유용 설정] 클라우드 배포 시 Streamlit Secrets에서 키를 가져옵니다.
 # 로컬에서 테스트할 때는 .streamlit/secrets.toml 파일을 생성하여 관리하세요.
 try:
-    TEAM_API_KEY = st.secrets["GOOGLE_API_KEY"]
+    if "GOOGLE_API_KEY" in st.secrets:
+        TEAM_API_KEY = st.secrets["GOOGLE_API_KEY"]
+    else:
+        TEAM_API_KEY = None
 except:
-    TEAM_API_KEY = None  # Secrets가 없으면 None 처리 (사용자가 직접 입력하도록 유도)
-
-# --- Page Config ---
-st.set_page_config(
-    page_title="스마트 발주서 관리자",
-    page_icon="📑",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+    TEAM_API_KEY = None
 
 # ==========================================
 # 🔐 로그인 기능 (Security)
